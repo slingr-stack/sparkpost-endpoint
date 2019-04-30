@@ -1,0 +1,149 @@
+{
+    "label": "SparkPost",
+    "name": "sparkpost",
+    "apiVersion": "v1",
+    "internal": false,
+    "configurationType": "GLOBAL",
+    "deployment": {
+        "profiles":[
+            {
+                "name": "default",
+                "label": "Default",
+                "memory": 256,
+                "description": "Default configuration"
+            }
+        ],
+        "allowMultipleInstances": false
+    },
+    "icon48": "https://storage.googleapis.com/static.slingrs.io/platform/endpoints/sparkpost.png",
+    "configurationHelpUrl": "/endpoints_sparkpost.html#configuration",
+    "status": "ACTIVE",
+    "stores": [
+        {"name": "emails"}
+    ],
+    "events": [
+        {
+            "label": "Response Arrived",
+            "name": "responseArrived",
+            "description": "Event thrown when a new response email to a previous sent email arrives to the endpoint."
+        },
+        {
+            "label": "Email Arrived",
+            "name": "emailArrived",
+            "description": "Event thrown when a new email arrives to the endpoint and it is not a response to a previous sent email."
+        },
+        {
+            "label": "Service Event",
+            "name": "serviceEvent"
+        }
+    ],
+    "functions": [
+        {
+            "label": "Send Email",
+            "name": "_sendEmail",
+            "callbacks": [
+                {
+                    "name": "responseArrived"
+                },
+                {
+                    "name": "serviceEvent"
+                }
+            ]
+        },
+        {
+            "label": "GET",
+            "name": "_get"
+        },
+        {
+            "label": "POST",
+            "name": "_post"
+        },
+        {
+            "label": "PUT",
+            "name": "_put"
+        },
+        {
+            "label": "DELETE",
+            "name": "_delete"
+        },
+        {
+            "label": "Convert HTML to text",
+            "name": "_convertToText"
+        },
+        {
+            "label": "Convert text to HTML",
+            "name": "_convertToHtml"
+        },
+        {
+            "label": "Extract text from response",
+            "name": "_extractTextResponse"
+        },
+        {
+            "label": "Extract HTML from response",
+            "name": "_extractHtmlResponse"
+        },
+        {
+            "label": "Configure inbound domains",
+            "name": "_configureInboundDomains"
+        },
+        {
+            "label": "Remove inbound domain",
+            "name": "_removeInboundDomain"
+        }
+    ],
+    "scripts":[
+        "functions.js"
+    ],
+    "configuration":[
+        {
+            "name": "apiKey",
+            "label": "API key",
+            "type": "text",
+            "required": true
+        },
+        {
+            "name": "senderName",
+            "label": "Default sender name",
+            "type": "text"
+        },
+        {
+            "name": "senderEmail",
+            "label": "Default sender email",
+            "type": "text",
+            "required": true,
+            "typeOptions": {
+                "validation": "email"
+            }
+        },
+        {
+            "name": "inboundDomains",
+            "label": "Inbound domains",
+            "type": "text",
+            "required": true
+        },
+        {
+            "name": "relayWebhook",
+            "label": "Inbound Domain URL",
+            "type": "label",
+            "value": "config.WEBHOOK_URL+'/inbound'"
+        },
+        {
+            "name": "webhook",
+            "label": "Webhook URL",
+            "type": "label",
+            "value": "@config.WEBHOOK_URL"
+        },
+        {
+            "name": "webhookUsername",
+            "label": "Webhook username",
+            "type": "text",
+            "required": true
+        },
+        {
+            "name": "webhookPassword",
+            "label": "Webhook password",
+            "type": "text",
+            "required": true
+        }
+    ]
+}
